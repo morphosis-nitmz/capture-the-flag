@@ -1,0 +1,38 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - pip install --upgrade awscli
+  pre_build:
+    commands:
+      - echo Entering pre_build phase...
+      - echo Test started on `date`
+      - mvn clean compile test
+  build:
+    commands:
+      - echo Entering build phase...
+      - echo Build started on `date`
+      - mvn war:exploded
+  post_build:
+    commands:
+      - echo Entering post_build phase...
+      - echo Build completed on `date`
+      - mv target/ROOT .
+artifacts:
+  type: zip
+  files:
+    - 'ROOT/WEB-INF/classes/application.properties'
+    - 'ROOT/WEB-INF/classes/com/aws/codestar/projecttemplates/HelloWorldAppInitializer.class'
+    - 'ROOT/WEB-INF/classes/com/aws/codestar/projecttemplates/configuration/*'
+    - 'ROOT/WEB-INF/classes/com/aws/codestar/projecttemplates/controller/*'
+    - 'ROOT/WEB-INF/classes/com/aws/codestar/projecttemplates/security/*'
+    - 'ROOT/WEB-INF/lib/*'
+    - 'ROOT/WEB-INF/views/*'
+    - 'ROOT/WEB-INF/views/questions_wait.jsp'
+    - 'ROOT/WEB-INF/views/login.jsp'
+    - 'ROOT/resources/gradients.css'
+    - 'ROOT/resources/set-background.js'
+    - 'ROOT/resources/styles.css'
+    - 'ROOT/resources/tweet.svg'
+    - 'ROOT/resources/*'
